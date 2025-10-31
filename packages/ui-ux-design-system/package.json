@@ -1,0 +1,9 @@
+﻿{
+  "name": "@medical/ui-ux-design-system",
+  "version": "1.0.0",
+  "description": "Shared medical-themed UI components for all apps.",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo 'No tests yet'"
+  }
+}
