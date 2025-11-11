@@ -1,5 +1,22 @@
 {
   "expo": {
-    "extends": "./apps/frontend-app/app.json"
+    "extends": "./apps/frontend-app/app.json",
+    "extra": {
+      "eas": {
+        "projectId": "6cef699a-b429-4792-addd-05716e1a537c"
+      }
+    },
+    "android": {
+      "package": "com.medical.procedure"
+    },
+    "ios": {
+      "bundleIdentifier": "com.medical.procedure",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
