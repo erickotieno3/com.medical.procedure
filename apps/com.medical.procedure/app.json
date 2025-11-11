@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Surgical Procedure Guide",
+    "slug": "com.medical.procedure",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.newcompany.newappid"
+    },
+    "ios": {
+      "bundleIdentifier": "com.newcompany.newappid"
+    }
+  }
+}
