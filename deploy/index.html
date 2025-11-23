@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Procedure AI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #007BFF;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+
+        textarea::placeholder {
+            color: #999;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 18px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #007BFF, #0056b3);
+            color: white;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+        }
+
+        .secondary-btn {
+            background: #f8f9fa;
+            color: #333;
+            border: 2px solid #e1e5e9;
+        }
+
+        .secondary-btn:hover {
+            background: #e9ecef;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .response-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .response-header {
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .response-content {
+            padding: 25px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007BFF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .examples {
+            margin-top: 30px;
+        }
+
+        .examples h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .example-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .example-chip {
+            background: #e3f2fd;
+            color: #007BFF;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #bbdefb;
+        }
+
+        .example-chip:hover {
+            background: #007BFF;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>?? Medical AI Assistant</h1>
+            <p>Get instant, AI-powered guidance for medical procedures</p>
+        </div>
+
+        <div class="content">
+            <div class="input-group">
+                <label for="medicalPrompt">Describe the medical procedure you need help with:</label>
+                <textarea 
+                    id="medicalPrompt" 
+                    placeholder="Example: How to perform CPR on an adult? What are the steps for proper wound cleaning and bandaging? How to recognize signs of stroke?"
+                ></textarea>
+            </div>
+
+            <div class="button-group">
+                <button class="primary-btn" onclick="askMedicalAI()">
+                    <span>?? Get Medical Guidance</span>
+                </button>
+                <button class="secondary-btn" onclick="clearResponse()">
+                    <span>??? Clear</span>
+                </button>
+            </div>
+
+            <div class="examples">
+                <h3>?? Quick Examples:</h3>
+                <div class="example-chips">
+                    <div class="example-chip" onclick="setExample('How to perform CPR step by step?')">CPR Procedure</div>
+                    <div class="example-chip" onclick="setExample('Proper wound cleaning and bandaging technique')">Wound Care</div>
+                    <div class="example-chip" onclick="setExample('Signs and symptoms of heart attack')">Heart Attack Signs</div>
+                    <div class="example-chip" onclick="setExample('How to use an epinephrine auto-injector')">EpiPen Usage</div>
+                </div>
+            </div>
+
+            <div id="responseContainer" class="response-container hidden">
+                <div class="response-header">
+                    <span>?? Medical Guidance</span>
+                </div>
+                <div class="response-content" id="responseContent"></div>
+            </div>
+
+            <div id="loading" class="loading hidden">
+                <div class="loading-spinner"></div>
+                <p>Consulting medical AI... Please wait</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function setExample(text) {
+            document.getElementById('medicalPrompt').value = text;
+        }
+
+        function clearResponse() {
+            document.getElementById('medicalPrompt').value = '';
+            document.getElementById('responseContainer').classList.add('hidden');
+        }
+
+        async function askMedicalAI() {
+            const prompt = document.getElementById('medicalPrompt').value.trim();
+            const responseContainer = document.getElementById('responseContainer');
+            const responseContent = document.getElementById('responseContent');
+            const loading = document.getElementById('loading');
+
+            if (!prompt) {
+                alert('Please describe the medical procedure you need help with.');
+                return;
+            }
+
+            // Show loading, hide previous response
+            loading.classList.remove('hidden');
+            responseContainer.classList.add('hidden');
+
+            try {
+                const response = await fetch('/api/medical-ai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        prompt: prompt,
+                        medicalContext: 'medical procedure guidance'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                // Hide loading
+                loading.classList.add('hidden');
+                
+                if (data.success) {
+                    responseContent.textContent = data.response;
+                    responseContainer.classList.remove('hidden');
+                } else {
+                    responseContent.textContent = `Error: ${data.error}\n\n${data.instructions || ''}`;
+                    responseContainer.classList.remove('hidden');
+                }
+            } catch (error) {
+                loading.classList.add('hidden');
+                responseContent.textContent = `Network Error: ${error.message}\n\nPlease check your connection and try again.`;
+                responseContainer.classList.remove('hidden');
+            }
+        }
+
+        // Allow pressing Enter to submit (with Shift+Enter for new line)
+        document.getElementById('medicalPrompt').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                askMedicalAI();
+            }
+        });
+    </script>
+</body>
+</html>
