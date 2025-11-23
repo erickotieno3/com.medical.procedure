@@ -1,0 +1,16 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background: Medical Blue -->
+  <rect width="1024" height="1024" rx="200" ry="200" fill="#007BFF"/>
+  
+  <!-- Element: Minimalist Medical Cross with Heartbeat -->
+  <g transform="translate(212, 212) scale(0.6)">
+    <!-- Cross Vertical -->
+    <rect x="425" y="0" width="150" height="1000" rx="20" fill="white"/>
+    <!-- Cross Horizontal -->
+    <rect x="0" y="425" width="1000" height="150" rx="20" fill="white"/>
+    
+    <!-- Heartbeat Line Overlay (Red) -->
+    <path d="M150 500 L300 500 L375 350 L450 650 L525 500 L850 500" 
+          stroke="#FF4C4C" stroke-width="40" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
