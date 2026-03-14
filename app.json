@@ -1,7 +1,7 @@
 ﻿{
   "expo": {
     "name": "Medical-Surgical Procedure Guide",
-    "slug": "procedure-guide",
+    "slug": "medical-procedure-guide",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -37,9 +37,10 @@
     },
     "extra": {
       "eas": {
-        "projectId": "paste-real-uuid-here"
+        "projectId": "e8103bfa-4665-4b2c-a622-642a2660ee13"
       }
     }
   }
 }
+
 
