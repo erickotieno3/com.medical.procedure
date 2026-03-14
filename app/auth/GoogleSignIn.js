@@ -7,10 +7,10 @@ import { generateNonce } from '../utils/nonceGenerator';
 // For web platform fallback
 import * as AuthSession from 'expo-auth-session';
 
-const GOOGLE_CLIENT_ID = 'erickotienokjv@gmail.com'; // Will be replaced by PowerShell
-const ANDROID_CLIENT_ID = 'erickotienokjv@gmail.com';
-const IOS_CLIENT_ID = 'erickotienokjv@gmail.com';
-const WEB_CLIENT_ID = 'erickotienokjv@gmail.com';
+const GOOGLE_CLIENT_ID = '772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com'; // Will be replaced by PowerShell
+const ANDROID_CLIENT_ID = '772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com';
+const IOS_CLIENT_ID = '772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com';
+const WEB_CLIENT_ID = '772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com';
 
 export default function GoogleSignInScreen({ onSignIn }) {
   const [userInfo, setUserInfo] = useState(null);
@@ -131,3 +131,4 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
