@@ -1,0 +1,3 @@
+﻿MEDICAL DISCLAIMER: For informational purposes only. Not a substitute for professional medical advice. 
+This app ([YourAppName]) complies with Google Play Medical Content policies. 
+Use at your own risk. Consult a licensed professional for any health concerns.
