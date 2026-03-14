@@ -37,8 +37,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "procedure-guide"
+        "projectId": "paste-real-uuid-here"
       }
     }
   }
 }
+
