@@ -1,37 +1,37 @@
-﻿{
-  "expo": {
-    "name": "Medical-Surgical Procedure Guide",
-    "slug": "procedure-guide",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "android": {
-      "package": "com.procedure.guide",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
-    },
-    "ios": {
-      "bundleIdentifier": "com.procedure.guide"
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "expo-dev-client"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "bb1dc4dc-8e6e-4d70-a59b-56c8874a7dea"
-      }
-    },
-    "owner": "erickfotieno"
-  }
+{
+    "expo":  {
+                 "name":  "Medical-Surgical Procedure Guide",
+                 "slug":  "procedure-guide",
+                 "version":  "1.0.0",
+                 "orientation":  "portrait",
+                 "icon":  "./assets/icon.png",
+                 "userInterfaceStyle":  "light",
+                 "splash":  {
+                                "image":  "./assets/splash.png",
+                                "resizeMode":  "contain",
+                                "backgroundColor":  "#ffffff"
+                            },
+                 "android":  {
+                                 "package":  "com.procedure.guide",
+                                 "adaptiveIcon":  {
+                                                      "foregroundImage":  "./assets/adaptive-icon.png",
+                                                      "backgroundColor":  "#ffffff"
+                                                  }
+                             },
+                 "ios":  {
+                             "bundleIdentifier":  "com.procedure.guide"
+                         },
+                 "web":  {
+                             "favicon":  "./assets/favicon.png"
+                         },
+                 "plugins":  [
+                                 "expo-dev-client"
+                             ],
+                 "extra":  {
+                               "eas":  {
+                                           "projectId":  "bb1dc4dc-8e6e-4d70-a59b-56c8874a7dea"
+                                       }
+                           },
+                 "owner":  "erickfotieno"
+             }
 }
