@@ -1,15 +1,12 @@
-import React from 'react';
+﻿import React from 'react';
 import { View,Text,StyleSheet,ScrollView,TouchableOpacity,Linking } from 'react-native';
-
 export default function BlogDetailScreen({ route, navigation }) {
   const { article:a } = route.params;
   if (!a) return null;
   return (
     <View style={s.container}>
       <View style={s.header}>
-        <TouchableOpacity onPress={()=>navigation.goBack()}>
-          <Text style={s.back}>Back</Text>
-        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.goBack()}><Text style={s.back}>Back</Text></TouchableOpacity>
         <View style={s.catBadge}><Text style={s.catTxt}>{a.category}</Text></View>
       </View>
       <ScrollView style={s.scroll} showsVerticalScrollIndicator={false}>
@@ -23,26 +20,14 @@ export default function BlogDetailScreen({ route, navigation }) {
           <Text style={s.summary}>{a.summary}</Text>
           <View style={s.divider}/>
           <Text style={s.body}>{a.content}</Text>
-          {a.tags?.length>0 && (
-            <View style={s.tagsSection}>
-              <Text style={s.tagsTitle}>Tags</Text>
-              <View style={s.tags}>
-                {a.tags.map((t,i)=><View key={i} style={s.tag}><Text style={s.tagTxt}>#{t}</Text></View>)}
-              </View>
-            </View>
-          )}
-          {a.url ? (
-            <TouchableOpacity style={s.srcBtn} onPress={()=>Linking.openURL(a.url)}>
-              <Text style={s.srcBtnTxt}>Read Full Article at {a.source}</Text>
-            </TouchableOpacity>
-          ) : null}
+          {a.tags?.length>0 && (<View style={s.tagsSection}><Text style={s.tagsTitle}>Tags</Text><View style={s.tags}>{a.tags.map((t,i)=><View key={i} style={s.tag}><Text style={s.tagTxt}>#{t}</Text></View>)}</View></View>)}
+          {a.url ? (<TouchableOpacity style={s.srcBtn} onPress={()=>Linking.openURL(a.url)}><Text style={s.srcBtnTxt}>Read Full Article at {a.source}</Text></TouchableOpacity>) : null}
           <View style={{height:40}}/>
         </View>
       </ScrollView>
     </View>
   );
 }
-
 const s = StyleSheet.create({
   container:{flex:1,backgroundColor:'#fff'},
   header:{flexDirection:'row',alignItems:'center',justifyContent:'space-between',padding:16,paddingTop:50,backgroundColor:'#2c3e50'},

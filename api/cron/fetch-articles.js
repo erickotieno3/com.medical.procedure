@@ -1,6 +1,5 @@
-import { Redis } from '@upstash/redis';
+﻿import { Redis } from '@upstash/redis';
 const redis = new Redis({ url: process.env.UPSTASH_REDIS_REST_URL, token: process.env.UPSTASH_REDIS_REST_TOKEN });
-
 function detectCategory(text) {
   const t = (text||'').toLowerCase();
   if (t.match(/cardiac|heart|cardio/))       return 'Cardiology';
@@ -15,21 +14,18 @@ function detectCategory(text) {
   if (t.match(/nurs|patient care|clinical/)) return 'Nursing';
   return 'General Medicine';
 }
-
 function extractTags(text) {
   const kw = ['surgery','procedure','technique','treatment','therapy','diagnosis','imaging','robotic','laparoscopic','minimally invasive','clinical trial','guideline','protocol','nursing','wound','catheter','airway'];
   return kw.filter(k => (text||'').toLowerCase().includes(k)).slice(0,5);
 }
-
 async function fetchNewsAPI() {
   try {
-    const url = https://newsapi.org/v2/everything?q=medical+surgical+procedure&language=en&sortBy=publishedAt&pageSize=20&apiKey=;
+    const url = 'https://newsapi.org/v2/everything?q=medical+surgical+procedure&language=en&sortBy=publishedAt&pageSize=20&apiKey=' + process.env.NEWS_API_KEY;
     const res  = await fetch(url);
     const data = await res.json();
     if (!data.articles) return [];
     return data.articles.map((a,i) => ({
-      id: 
-ews__,
+      id: 'news_' + Date.now() + '_' + i,
       title: a.title||'', summary: a.description||'',
       content: a.content||a.description||'',
       source: a.source?.name||'Medical News',
@@ -41,34 +37,32 @@ ews__,
     }));
   } catch(e) { console.error('NewsAPI error:', e.message); return []; }
 }
-
 async function fetchPubMed() {
   try {
     const sr = await fetch('https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=surgical+procedure+new+technique&retmax=10&sort=date&retmode=json');
     const sd = await sr.json();
     const ids = sd.esearchresult?.idlist||[];
     if (!ids.length) return [];
-    const sumR = await fetch(https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=&retmode=json);
+    const sumR = await fetch('https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=' + ids.join(',') + '&retmode=json');
     const sumD = await sumR.json();
     return ids.map(id => {
       const a = sumD.result?.[id];
       if (!a) return null;
       return {
-        id: pubmed_,
+        id: 'pubmed_' + id,
         title: a.title||'',
-        summary: ${a.source} - ,
-        content: Published in . Authors: . PubMed ID: .,
-        source: 'PubMed - '+(a.source||''),
-        url: https://pubmed.ncbi.nlm.nih.gov//,
+        summary: a.source + ' - ' + (a.authors?.[0]?.name||''),
+        content: 'Published in ' + a.source + '. Authors: ' + (a.authors?.map(x=>x.name).join(', ')||'N/A') + '. PubMed ID: ' + id + '.',
+        source: 'PubMed - ' + (a.source||''),
+        url: 'https://pubmed.ncbi.nlm.nih.gov/' + id + '/',
         imageUrl: '', publishedAt: a.pubdate||new Date().toISOString(),
         category: detectCategory(a.title), tags: extractTags(a.title), isNew: true,
       };
     }).filter(Boolean);
   } catch(e) { console.error('PubMed error:', e.message); return []; }
 }
-
 export default async function handler(req, res) {
-  if (req.headers.authorization !== Bearer ) {
+  if (req.headers.authorization !== 'Bearer ' + process.env.CRON_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   try {

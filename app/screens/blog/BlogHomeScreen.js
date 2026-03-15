@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { View,Text,StyleSheet,FlatList,TouchableOpacity,TextInput,RefreshControl,ActivityIndicator } from 'react-native';
 import { blogApi } from '../../../services/blogService';
-
 export default function BlogHomeScreen({ navigation }) {
   const [articles,    setArticles]    = useState([]);
   const [categories,  setCategories]  = useState([]);
@@ -13,7 +12,6 @@ export default function BlogHomeScreen({ navigation }) {
   const [refreshing,  setRefreshing]  = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [lastUpdated, setLastUpdated] = useState('');
-
   const load = useCallback(async (pg=1, cat=category, q=search, isRefresh=false) => {
     if (pg===1) isRefresh ? setRefreshing(true) : setLoading(true);
     else setLoadingMore(true);
@@ -24,17 +22,14 @@ export default function BlogHomeScreen({ navigation }) {
     if (data.lastUpdated) setLastUpdated(new Date(data.lastUpdated).toLocaleDateString());
     setLoading(false); setRefreshing(false); setLoadingMore(false);
   }, [category, search]);
-
   useEffect(() => {
     blogApi.getCategories().then(cats => setCategories(['All',...cats.map(c=>c.name)]));
     load(1);
   }, []);
-
   const onCat    = c  => { setCategory(c); setPage(1); load(1,c,search); };
   const onSearch = q  => { setSearch(q);   setPage(1); load(1,category,q); };
   const onRefresh= () => { setPage(1); load(1,category,search,true); };
   const onEnd    = () => { if (page<pages&&!loadingMore) { const n=page+1; setPage(n); load(n,category,search); }};
-
   const renderCard = ({ item:a }) => (
     <TouchableOpacity style={s.card} onPress={()=>navigation.navigate('BlogDetail',{article:a})}>
       <View style={s.cardTop}>
@@ -47,14 +42,9 @@ export default function BlogHomeScreen({ navigation }) {
         <Text style={s.cardSrc}>{a.source}</Text>
         <Text style={s.cardDate}>{a.publishedAt ? new Date(a.publishedAt).toLocaleDateString() : ''}</Text>
       </View>
-      {a.tags?.length>0 && (
-        <View style={s.tags}>
-          {a.tags.slice(0,3).map((t,i)=><View key={i} style={s.tag}><Text style={s.tagTxt}>#{t}</Text></View>)}
-        </View>
-      )}
+      {a.tags?.length>0 && (<View style={s.tags}>{a.tags.slice(0,3).map((t,i)=><View key={i} style={s.tag}><Text style={s.tagTxt}>#{t}</Text></View>)}</View>)}
     </TouchableOpacity>
   );
-
   return (
     <View style={s.container}>
       <View style={s.header}>
@@ -62,32 +52,13 @@ export default function BlogHomeScreen({ navigation }) {
         {lastUpdated ? <Text style={s.headerSub}>Updated {lastUpdated}</Text> : null}
       </View>
       <TextInput style={s.search} placeholder='Search medical news...' placeholderTextColor='#95a5a6' value={search} onChangeText={onSearch}/>
-      <FlatList
-        horizontal data={categories} keyExtractor={i=>i}
-        showsHorizontalScrollIndicator={false} style={s.cats}
-        contentContainerStyle={{paddingHorizontal:12,paddingVertical:8}}
-        renderItem={({item:c})=>(
-          <TouchableOpacity style={[s.chip,category===c&&s.chipActive]} onPress={()=>onCat(c)}>
-            <Text style={[s.chipTxt,category===c&&s.chipTxtActive]}>{c}</Text>
-          </TouchableOpacity>
-        )}
-      />
-      {loading ? (
-        <ActivityIndicator size='large' color='#2c3e50' style={{marginTop:60}}/>
-      ) : (
-        <FlatList
-          data={articles} keyExtractor={a=>a.id} renderItem={renderCard}
-          contentContainerStyle={{padding:12}}
-          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#2c3e50']}/>}
-          onEndReached={onEnd} onEndReachedThreshold={0.3}
-          ListEmptyComponent={<Text style={s.empty}>No articles found. Pull down to refresh.</Text>}
-          ListFooterComponent={loadingMore?<ActivityIndicator color='#2c3e50' style={{margin:16}}/>:null}
-        />
+      <FlatList horizontal data={categories} keyExtractor={i=>i} showsHorizontalScrollIndicator={false} style={s.cats} contentContainerStyle={{paddingHorizontal:12,paddingVertical:8}} renderItem={({item:c})=>(<TouchableOpacity style={[s.chip,category===c&&s.chipActive]} onPress={()=>onCat(c)}><Text style={[s.chipTxt,category===c&&s.chipTxtActive]}>{c}</Text></TouchableOpacity>)}/>
+      {loading ? (<ActivityIndicator size='large' color='#2c3e50' style={{marginTop:60}}/>) : (
+        <FlatList data={articles} keyExtractor={a=>a.id} renderItem={renderCard} contentContainerStyle={{padding:12}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={['#2c3e50']}/>} onEndReached={onEnd} onEndReachedThreshold={0.3} ListEmptyComponent={<Text style={s.empty}>No articles found. Pull down to refresh.</Text>} ListFooterComponent={loadingMore?<ActivityIndicator color='#2c3e50' style={{margin:16}}/>:null}/>
       )}
     </View>
   );
 }
-
 const s = StyleSheet.create({
   container:{flex:1,backgroundColor:'#f5f6fa'},
   header:{backgroundColor:'#2c3e50',padding:20,paddingTop:50},
