@@ -6,20 +6,35 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "env": {
+        "GOOGLE_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_WEB_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_ANDROID_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_IOS_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "PAYPAL_ADMOB": "juniorotieno@yahoo.com",
+        "PAYPAL_MEDISAVE": "erickotienokjv@gmail.com"
       }
     },
     "preview": {
       "distribution": "internal",
-      "android": {
-        "buildType": "apk"
+      "env": {
+        "GOOGLE_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_WEB_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com"
       }
     },
     "production": {
       "autoIncrement": true,
-      "android": {
-        "buildType": "app-bundle"
+      "env": {
+        "GOOGLE_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_WEB_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_ANDROID_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "GOOGLE_IOS_CLIENT_ID": "772437716609-aqarn2f6mq5k1tj865iefnfrvr31hc91.apps.googleusercontent.com",
+        "PAYPAL_ADMOB": "juniorotieno@yahoo.com",
+        "PAYPAL_MEDISAVE": "erickotienokjv@gmail.com",
+        "PAYPAL_PRIMARY": "juniorotieno@yahoo.com",
+        "PAYPAL_SECONDARY": "erickotienokjv@gmail.com",
+        "MEDISAVE_PAYPAL_EMAIL": "erickotienokjv@gmail.com",
+        "API_BASE_URL": "https://com-medical-procedure.vercel.app/api"
       }
     }
   },
