@@ -52,6 +52,7 @@
           "iosAppId": "ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX"
         }
       ]
-    ]
+    ],
+  "extra": { "eas": { "projectId": "a1b2c3d4-5678-90ab-cdef-1234567890ab" } }
   }
 }
