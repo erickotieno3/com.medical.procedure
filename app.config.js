@@ -1,29 +1,41 @@
 ﻿export default {
-  "expo": {
-    "name": "Medical Procedure App",
-    "slug": "medical-procedure-app",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+  expo: {
+    name: "Medical-Surgical Procedure Guide",
+    slug: "medical-surgical-procedure-guide",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/icons/icon.png",
+    userInterfaceStyle: "light",
+    splash: {
+      image: "./assets/splash/splash.png",
+      resizeMode: "contain",
+      backgroundColor: "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.medical.procedure"
+    assetBundlePatterns: ["**/*"],
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "com.procedure.guide",
+      buildNumber: "1.0.0",
+      icon: "./assets/icons/icon-ios/icon.png",
+      splash: {
+        image: "./assets/splash/splash-ios/splash.png",
+        tabletImage: "./assets/splash/splash-ios/splash-tablet.png",
+        backgroundColor: "#ffffff"
+      }
     },
-    "android": {
-      "package": "com.medical.procedure",
-      "versionCode": 1,
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+    android: {
+      package: "com.procedure.guide",
+      versionCode: 1,
+      icon: "./assets/icons/icon-android/icon.png",
+      adaptiveIcon: {
+        foregroundImage: "./assets/icons/icon-android/adaptive-icon.png",
+        backgroundColor: "#ffffff"
       },
-      "permissions": [
+      splash: {
+        image: "./assets/splash/splash-android/splash.png",
+        backgroundColor: "#ffffff"
+      },
+      permissions: [
         "CAMERA",
         "RECORD_AUDIO",
         "MODIFY_AUDIO_SETTINGS",
@@ -31,9 +43,21 @@
         "INTERNET"
       ]
     },
-    "extra": {
-      "eas": {
-        "projectId": "YOUR_PROJECT_ID_HERE"
+    web: {
+      favicon: "./assets/icons/favicon.png"
+    },
+    plugins: [
+      [
+        "react-native-google-mobile-ads",
+        {
+          androidAppId: "ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX",
+          iosAppId: "ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX"
+        }
+      ]
+    ],
+    extra: {
+      eas: {
+        projectId: "e8103bfa-4665-4b2c-a622-642a2660ee13"
       }
     }
   }
