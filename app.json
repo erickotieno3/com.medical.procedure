@@ -1,46 +1,48 @@
-﻿{
-  "expo": {
-    "name": "Medical-Surgical Procedure Guide",
-    "slug": "medical-procedure-guide",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "procedure-guide",
-    "userInterfaceStyle": "automatic",
-    "cli": {
-      "appVersionSource": "local"
-    },
-    "splash": {
-      "image": "./assets/images/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.procedure.guide"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.procedure.guide"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
-    },
-    "plugins": ["expo-router"],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": "e8103bfa-4665-4b2c-a622-642a2660ee13"
-      }
-    }
-  }
+{
+    "expo":  {
+                 "slug":  "medical-surgical-procedure-guide",
+                 "ios":  {
+                             "buildNumber":  "1.0.0",
+                             "splash":  {
+                                            "backgroundColor":  "#ffffff",
+                                            "tabletImage":  "./assets/splash/splash-ios/splash-tablet.png",
+                                            "image":  "./assets/splash/splash-ios/splash.png"
+                                        },
+                             "bundleIdentifier":  "com.procedure.guide",
+                             "supportsTablet":  true,
+                             "icon":  "./assets/icons/icon-ios/icon.png"
+                         },
+                 "updates":  {
+                                 "fallbackToCacheTimeout":  0
+                             },
+                 "assetBundlePatterns":  [
+                                             "**/*"
+                                         ],
+                 "version":  "1.0.0",
+                 "orientation":  "portrait",
+                 "icon":  "./assets/icons/icon.png",
+                 "android":  {
+                                 "icon":  "./assets/icons/icon-android/icon.png",
+                                 "splash":  {
+                                                "image":  "./assets/splash/splash-android/splash.png",
+                                                "backgroundColor":  "#ffffff"
+                                            },
+                                 "versionCode":  1,
+                                 "adaptiveIcon":  {
+                                                      "backgroundColor":  "#FFFFFF",
+                                                      "foregroundImage":  "./assets/icons/icon-android/adaptive-icon.png"
+                                                  },
+                                 "package":  "com.procedure.guide"
+                             },
+                 "name":  "Medical-Surgical Procedure Guide",
+                 "web":  {
+                             "favicon":  "./assets/icons/favicon.png"
+                         },
+                 "userInterfaceStyle":  "light",
+                 "splash":  {
+                                "backgroundColor":  "#ffffff",
+                                "resizeMode":  "contain",
+                                "image":  "./assets/splash/splash.png"
+                            }
+             }
 }
-
-
