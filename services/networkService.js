@@ -1,123 +1,114 @@
-﻿// services/networkService.js
-import axios from 'axios';
+﻿import axios from 'axios';
 import NetInfo from '@react-native-community/netinfo';
 import { Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// API Configuration
-const API_BASE_URL = 'https://api.medical-procedures.com/v1';
-const API_TIMEOUT = 30000; // 30 seconds
+const API_BASE_URL = 'https://com-medical-procedure.vercel.app/api';
+const API_TIMEOUT  = 30000;
 
-// Create axios instance
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: API_TIMEOUT,
   headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-Platform': Platform.OS,
-    'X-App-Version': '1.0.0'
-  }
+    'Content-Type':  'application/json',
+    'Accept':        'application/json',
+    'X-Platform':    Platform.OS,
+    'X-App-Version': '1.0.0',
+  },
 });
 
-// Network status monitor
+// ── Network monitor ───────────────────────────────────────────
 export const networkMonitor = {
   isConnected: true,
   connectionType: 'unknown',
-  
-  init: () => {
+
+  init() {
     NetInfo.addEventListener(state => {
-      networkMonitor.isConnected = state.isConnected;
-      networkMonitor.connectionType = state.type;
-      console.log('Network status changed:', {
-        connected: state.isConnected,
-        type: state.type
-      });
+      this.isConnected     = state.isConnected;
+      this.connectionType  = state.type;
     });
   },
-  
-  checkConnection: async () => {
+
+  async checkConnection() {
     const state = await NetInfo.fetch();
     return {
-      isConnected: state.isConnected,
-      type: state.type,
-      isInternetReachable: state.isInternetReachable
+      isConnected:        state.isConnected,
+      type:               state.type,
+      isInternetReachable: state.isInternetReachable,
     };
+  },
+};
+
+// ── Auth token helper ─────────────────────────────────────────
+const getAuthToken = async () => {
+  try {
+    return await AsyncStorage.getItem('auth_token');
+  } catch {
+    return null;
   }
 };
 
-// Request interceptor
+// ── Request interceptor ───────────────────────────────────────
 apiClient.interceptors.request.use(
   async config => {
-    const isConnected = await networkMonitor.checkConnection();
-    if (!isConnected.isConnected) {
-      throw new Error('No internet connection');
-    }
-    
+    const net = await networkMonitor.checkConnection();
+    if (!net.isConnected) throw new Error('No internet connection');
+
     const token = await getAuthToken();
-    if (token) {
-      config.headers.Authorization = Bearer ;
-    }
-    
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+
     return config;
   },
-  error => {
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
-// Response interceptor
+// ── Response interceptor ──────────────────────────────────────
 apiClient.interceptors.response.use(
   response => response,
   error => {
     if (error.response) {
-      console.error('API Error Response:', error.response.data);
-      
       switch (error.response.status) {
-        case 401:
-          handleUnauthorized();
-          break;
-        case 404:
-          console.warn('Resource not found');
-          break;
-        case 500:
-          console.error('Server error');
-          break;
-        default:
-          console.error('API error:', error.response.status);
+        case 401: handleUnauthorized(); break;
+        case 404: console.warn('Resource not found'); break;
+        case 500: console.error('Server error'); break;
+        default:  console.error('API error:', error.response.status);
       }
     } else if (error.request) {
       console.error('No response from server');
     } else {
       console.error('Request error:', error.message);
     }
-    
     return Promise.reject(error);
   }
 );
 
-// API endpoints
+// ── API endpoints ─────────────────────────────────────────────
 export const api = {
-  getProcedures: () => apiClient.get('/procedures'),
-  getProcedureById: (id) => apiClient.get(/procedures/),
-  searchProcedures: (query) => apiClient.get('/procedures/search', { params: { q: query } }),
-  
-  getCategories: () => apiClient.get('/categories'),
-  getProceduresByCategory: (categoryId) => apiClient.get(/categories//procedures),
-  
-  getFavorites: () => apiClient.get('/favorites'),
-  addFavorite: (procedureId) => apiClient.post('/favorites', { procedureId }),
-  removeFavorite: (procedureId) => apiClient.delete(/favorites/),
-  
-  getUserProfile: () => apiClient.get('/user/profile'),
-  updateUserProfile: (data) => apiClient.put('/user/profile', data)
-};
+  // Procedures
+  getProcedures:           ()         => apiClient.get('/procedures'),
+  getProcedureById:        (id)       => apiClient.get(`/procedures/${id}`),
+  searchProcedures:        (query)    => apiClient.get('/procedures/search', { params: { q: query } }),
 
-const getAuthToken = async () => {
-  return null;
+  // Categories
+  getCategories:           ()         => apiClient.get('/categories'),
+  getProceduresByCategory: (catId)    => apiClient.get(`/categories/${catId}/procedures`),
+
+  // Favorites
+  getFavorites:            ()         => apiClient.get('/favorites'),
+  addFavorite:             (id)       => apiClient.post('/favorites', { procedureId: id }),
+  removeFavorite:          (id)       => apiClient.delete(`/favorites/${id}`),
+
+  // User
+  getUserProfile:          ()         => apiClient.get('/user/profile'),
+  updateUserProfile:       (data)     => apiClient.put('/user/profile', data),
+
+  // Health check
+  healthCheck:             ()         => apiClient.get('/health'),
 };
 
 const handleUnauthorized = () => {
-  console.log('User unauthorized - redirect to login');
+  AsyncStorage.removeItem('auth_token');
+  console.log('Session expired - user must log in again');
 };
 
 export default apiClient;
