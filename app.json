@@ -1,4 +1,4 @@
-{
+﻿{
     "expo":  {
                  "slug":  "medical-surgical-procedure-guide",
                  "ios":  {
@@ -43,6 +43,15 @@
                                 "backgroundColor":  "#ffffff",
                                 "resizeMode":  "contain",
                                 "image":  "./assets/splash/splash.png"
-                            }
-             }
+                            },
+    "plugins": [
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX",
+          "iosAppId": "ca-app-pub-XXXXXXXXXXXXXXXX~XXXXXXXXXX"
+        }
+      ]
+    ]
+  }
 }
