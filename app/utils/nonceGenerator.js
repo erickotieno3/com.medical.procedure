@@ -1,5 +1,4 @@
-﻿// utils/nonceGenerator.js
-import * as Crypto from 'expo-crypto';
+﻿import * as Crypto from 'expo-crypto';
 
 export const generateNonce = async () => {
   const nonce = Crypto.randomUUID();
@@ -9,3 +8,5 @@ export const generateNonce = async () => {
   );
   return { nonce, hashedNonce };
 };
+
+export default generateNonce;
