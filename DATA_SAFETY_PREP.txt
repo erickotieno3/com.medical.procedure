@@ -1,0 +1,23 @@
+﻿GOOGLE PLAY DATA SAFETY ANSWERS (2026)
+--------------------------------------
+SECTION 1: DATA COLLECTION & SECURITY
+- Collect/Share Data? YES
+- Encrypted in Transit? YES
+- Data Deletion Provided? YES (Link: https://your-vercel-domain.vercel.app/delete-account)
+
+SECTION 2: DATA TYPES (Required for your app)
+1. Personal Info: 
+   - Name & Email (Collected, Required, App Functionality)
+   - User IDs (Collected, Required, Account Management)
+2. Health Info:
+   - Health Info (Collected, Optional, App Functionality)
+3. Photos/Videos:
+   - Videos (Collected, Optional, App Functionality - for LiveKit)
+4. Audio:
+   - Voice/Sound (Collected, Optional, App Functionality)
+5. Device IDs:
+   - Device/Other IDs (Collected, Required, Analytics)
+
+SECTION 3: MEDICAL DECLARATION
+- Is this a medical device? NO
+- Core function: "Medical Education & Peer Consultation"

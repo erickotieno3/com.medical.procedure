@@ -1,4 +1,4 @@
-{
+﻿export default {
   "expo": {
     "name": "Medical Procedure App",
     "slug": "medical-procedure-app",
@@ -33,8 +33,8 @@
     },
     "extra": {
       "eas": {
-        "projectId": "YOUR_EXPO_PROJECT_ID"
+        "projectId": "YOUR_PROJECT_ID_HERE"
       }
     }
   }
-}
+};

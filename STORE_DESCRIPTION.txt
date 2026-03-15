@@ -1,0 +1,9 @@
+﻿Medical Surgical Procedure Guide is an educational tool designed for healthcare professionals and medical students. 
+
+FEATURES:
+- Step-by-step procedural workflows.
+- Real-time peer-review interface via LiveKit integration.
+- Secure authentication via Google Sign-In.
+
+IMPORTANT LEGAL DISCLAIMER:
+This application is for educational and UI/UX automation demonstration purposes ONLY. It does not provide clinical diagnoses, medical advice, or treatment plans. All clinical decisions must be made by a licensed healthcare professional. Use of this app does not establish a doctor-patient relationship.

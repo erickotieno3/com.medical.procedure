@@ -1,0 +1,28 @@
+﻿GOOGLE PLAY MEDICAL SUBMISSION GUIDE
+------------------------------------
+APP NAME: Medical Surgical Procedure Guide
+CATEGORY: Medical
+
+1. PRIVACY POLICY URL
+Link: https://your-vercel-domain.vercel.app/privacy.html
+(Ensure this is pasted in 'App Content' > 'Privacy Policy')
+
+2. DATA SAFETY SECTION ANSWERS
+- Does your app collect any of the required user data types? YES
+- Is all user data collected by your app encrypted in transit? YES
+- Do you provide a way for users to request that their data is deleted? YES
+
+DATA TYPES TO CHECK:
+- Personal Info: Name, Email (Required for Google Sign-In)
+- Photos/Videos: YES (Required for LiveKit video consultations)
+- Audio: YES (Required for LiveKit audio)
+
+3. MEDICAL DECLARATION (The 'Sensitive' Part)
+- Is your app a regulated medical device? NO (It is an educational guide).
+- Does the app provide health-related information? YES.
+- Source of Information: "Peer-reviewed surgical manuals and clinical guidelines."
+
+4. APP ACCESS (For Reviewers)
+- If your app has a login, you MUST provide:
+  Username: [Create a test user]
+  Password: [Create a test pass]

@@ -1,0 +1,10 @@
+default_platform(:android)
+platform :android do
+  desc "Upload app bundle to production"
+  lane :upload_production do
+    upload_to_play_store(
+      track: 'production',
+      aab: 'app/build/outputs/bundle/release/app-release.aab'
+    )
+  end
+end

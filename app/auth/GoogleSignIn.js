@@ -2,7 +2,7 @@
 import { View, Button, Text, StyleSheet, Alert } from 'react-native';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import * as WebBrowser from 'expo-web-browser';
-import { generateNonce } from '../utils/nonceGenerator';
+import { generateNonce } from '../../src/utils/nonceGenerator';
 
 // For web platform fallback
 import * as AuthSession from 'expo-auth-session';
@@ -131,4 +131,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
 
