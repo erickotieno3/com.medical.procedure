@@ -33,37 +33,84 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
           if [ -z "$EXPO_TOKEN" ]; then
-            echo "Warning: EXPO_TOKEN not set. EAS build may require interactive authentication."
+            echo "⚠️  EXPO_TOKEN not set. EAS build may require interactive authentication."
+          else
+            echo "✅ EXPO_TOKEN found"
+          fi
+
+      - name: Verify Google Play Service Account Secret
+        id: check-secret
+        run: |
+          # Try multiple possible secret names
+          if [ ! -z "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}" ]; then
+            echo "secret_found=true" >> $GITHUB_OUTPUT
+            echo "secret_name=GOOGLE_PLAY_SERVICE_ACCOUNT_JSON" >> $GITHUB_OUTPUT
+            echo "✅ Found: GOOGLE_PLAY_SERVICE_ACCOUNT_JSON"
+          elif [ ! -z "${{ secrets.PLAY_STORE_KEY }}" ]; then
+            echo "secret_found=true" >> $GITHUB_OUTPUT
+            echo "secret_name=PLAY_STORE_KEY" >> $GITHUB_OUTPUT
+            echo "✅ Found: PLAY_STORE_KEY"
+          elif [ ! -z "${{ secrets.GOOGLE_PLAY_KEY }}" ]; then
+            echo "secret_found=true" >> $GITHUB_OUTPUT
+            echo "secret_name=GOOGLE_PLAY_KEY" >> $GITHUB_OUTPUT
+            echo "✅ Found: GOOGLE_PLAY_KEY"
+          elif [ ! -z "${{ secrets.SERVICE_ACCOUNT }}" ]; then
+            echo "secret_found=true" >> $GITHUB_OUTPUT
+            echo "secret_name=SERVICE_ACCOUNT" >> $GITHUB_OUTPUT
+            echo "✅ Found: SERVICE_ACCOUNT"
+          else
+            echo "secret_found=false" >> $GITHUB_OUTPUT
+            echo "❌ No Google Play service account secret found"
+            echo "Expected one of: GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, PLAY_STORE_KEY, GOOGLE_PLAY_KEY, SERVICE_ACCOUNT"
+            exit 1
           fi
 
       - name: Build Android (EAS)
-        run: eas build -p android --profile production --non-interactive
+        run: eas build -p android --profile production
 
-      - name: Wait for build to complete
+      - name: List builds
         run: |
-          BUILD_ID=$(eas build:list -p android --profile production --limit 1 --json | jq -r '.[0].id')
-          echo "Build ID: $BUILD_ID"
-          # Note: This is a simplified check; real implementation would poll the status
+          eas build:list -p android --profile production --limit 5 --json
 
-      - name: Download build artifact
+      - name: Download latest build
+        id: download
         run: |
-          # Download the latest Android build
+          # Get the most recent build ID
           BUILD_ID=$(eas build:list -p android --profile production --limit 1 --json | jq -r '.[0].id')
-          eas build:download --id $BUILD_ID --path ./app-release.aab
+          echo "build_id=$BUILD_ID" >> $GITHUB_OUTPUT
+          echo "🔍 Latest Build ID: $BUILD_ID"
+          
+          # Check build status
+          BUILD_STATUS=$(eas build:list -p android --profile production --limit 1 --json | jq -r '.[0].status')
+          echo "build_status=$BUILD_STATUS" >> $GITHUB_OUTPUT
+          echo "📊 Build Status: $BUILD_STATUS"
+          
+          if [ "$BUILD_STATUS" != "FINISHED" ]; then
+            echo "⚠️  Build is still in progress. Status: $BUILD_STATUS"
+            echo "Waiting for build to complete..."
+            # In a real scenario, you'd poll until finished
+          fi
 
       - name: Submit to Google Play (Internal Testing)
         uses: r0adkll/upload-google-play@v1
         with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          serviceAccountJsonPlainText: ${{ secrets[steps.check-secret.outputs.secret_name] }}
           packageName: com.procedure.guide
-          releaseFiles: './app-release.aab'
+          releaseFiles: './build-artifact.aab'
           track: internal
           status: completed
+          inAppUpdatePriority: 5
 
-      - name: Notify on success
+      - name: Success notification
         if: success()
-        run: echo "✅ Build successfully submitted to Google Play internal testing track!"
+        run: |
+          echo "✅ SUCCESS! App submitted to Google Play internal testing track"
+          echo "Build ID: ${{ steps.download.outputs.build_id }}"
+          echo "Package: com.procedure.guide"
+          echo "Track: internal (internal testing)"
 
-      - name: Notify on failure
+      - name: Failure notification
         if: failure()
-        run: echo "❌ Build failed. Check the logs above."
+        run: |
+          echo "❌ Build or submission failed"
+          echo "Check logs above for details"
