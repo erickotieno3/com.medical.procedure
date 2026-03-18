@@ -98,13 +98,16 @@ jobs:
             echo "Waiting for build to complete..."
             # In a real scenario, you'd poll until finished
           fi
+          
+          # Download the build artifact
+          eas build:download --id $BUILD_ID --path ./app-release.aab
 
       - name: Submit to Google Play (Internal Testing)
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets[steps.check-secret.outputs.secret_name] }}
           packageName: com.procedure.guide
-          releaseFiles: './build-artifact.aab'
+          releaseFiles: './app-release.aab'
           track: internal
           status: completed
           inAppUpdatePriority: 5
