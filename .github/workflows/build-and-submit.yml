@@ -58,10 +58,18 @@ jobs:
             echo "secret_found=true" >> $GITHUB_OUTPUT
             echo "secret_name=SERVICE_ACCOUNT" >> $GITHUB_OUTPUT
             echo "✅ Found: SERVICE_ACCOUNT"
+          elif [ ! -z "${{ secrets.PRICE_COMPARISON_KEY }}" ]; then
+            echo "secret_found=true" >> $GITHUB_OUTPUT
+            echo "secret_name=PRICE_COMPARISON_KEY" >> $GITHUB_OUTPUT
+            echo "✅ Found: PRICE_COMPARISON_KEY (from price comparison app)"
+          elif [ ! -z "${{ secrets.GOOGLE_SERVICE_ACCOUNT }}" ]; then
+            echo "secret_found=true" >> $GITHUB_OUTPUT
+            echo "secret_name=GOOGLE_SERVICE_ACCOUNT" >> $GITHUB_OUTPUT
+            echo "✅ Found: GOOGLE_SERVICE_ACCOUNT"
           else
             echo "secret_found=false" >> $GITHUB_OUTPUT
             echo "❌ No Google Play service account secret found"
-            echo "Expected one of: GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, PLAY_STORE_KEY, GOOGLE_PLAY_KEY, SERVICE_ACCOUNT"
+            echo "Expected one of: GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, PLAY_STORE_KEY, GOOGLE_PLAY_KEY, SERVICE_ACCOUNT, PRICE_COMPARISON_KEY, GOOGLE_SERVICE_ACCOUNT"
             exit 1
           fi
 
